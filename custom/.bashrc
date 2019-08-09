@@ -1,14 +1,3 @@
-export host=android
-export HOME=/sdcard
-export HOSTNAME="galaxy"
-export TMPDIR=$HOME/tmp
-
-if [[ ${EUID} == 0 ]] ; then
-        export USER="root"
-else
-        export USER="henrik"
-fi
-
 if [ -d "/sbin/.magisk/busybox" ]; then
   BBDIR="/sbin/.magisk/busybox"
 elif [ -d "/sbin/.core/busybox" ]; then
