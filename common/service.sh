@@ -4,6 +4,25 @@
 # and module is placed.
 # This will make sure your module will still work
 # if Magisk change its mount point in the future
-MODDIR=${0%/*}
+MODDIR=${0%/*};
 
-# This script will be executed in late_start service mode
+symlink_from_file() {
+   cat $1 | while read line
+   do
+      target=$(echo $line | sed 's/;/ /g' | awk '{printf $2}');
+      symlink=$(echo $line | sed 's/;/ /g' | awk '{printf $1}');
+      ln -sf $target $2/$symlink;
+      chown 0:0 $2/$symlink;
+      chmod 755 $2/$symlink;
+   done
+   chown -R 0:0 $2;
+   chmod -R 755 $2;
+}
+
+mount -o rw,remount /system;
+
+cd /system/share/bash-completion/completions;
+cp $MODDIR/custom/symlink_completions .;
+symlink_from_file "$(pwd)/symlink_completions" "$(pwd)";
+
+mount -o ro,remount /system;

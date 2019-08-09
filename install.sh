@@ -28,7 +28,7 @@ SKIPMOUNT=false
 PROPFILE=false
 
 # Set to true if you need post-fs-data script
-POSTFSDATA=false
+POSTFSDATA=true
 
 # Set to true if you need late_start service script
 LATESTARTSERVICE=true
@@ -132,7 +132,7 @@ ui_print "*********************************************"
 # Copy/extract your module files into $MODPATH in on_install.
 
 on_install() {
-  ui_print "[1/8] Extracting files..";
+  ui_print "[1/7] Extracting files..";
   unzip -o "$ZIPFILE" '*' -d $MODPATH >&2;
 
   if [ -d /sdcard ]; then
@@ -141,7 +141,7 @@ on_install() {
     SDCARD=/storage/emulated/0
   fi
 
-  ui_print "[2/8] Setting $SDCARD location.."
+  ui_print "[2/7] Setting $SDCARD location.."
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.bashrc
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.motd
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/system/etc/mkshrc
@@ -181,34 +181,18 @@ on_install() {
     cp -rf $SDCARD/.motd $SDCARD/.motd.bak
     cp -rf $MODPATH/custom/.motd $SDCARD
   fi
-  ui_print "[3/8] Installing files..";
-}
-
-
-symlink_from_file() {
-   cat $1 | while read line
-   do
-      target=$(echo $line | sed 's/;/ /g' | awk '{printf $2}');
-      symlink=$(echo $line | sed 's/;/ /g' | awk '{printf $1}');
-      ln -sf $target $2/$symlink;
-      chown 0:0 $2/$symlink;
-      chmod 755 $2/$symlink;
-   done
+  ui_print "[3/7] Installing files..";
 }
 
 set_permissions() {
   # The following is the default rule, DO NOT remove
   set_perm_recursive $MODPATH 0 0 0755 0644;
 
-  ui_print "[4/8] Setting up symlinks.."
-  cd $MODPATH/system/share/bash-completion/completions
-  symlink_from_file "$MODPATH/custom/symlinks_completions" "$MODPATH/system/share/bash-completion/completions"
-
-  ui_print "[5/8] Installing to /system/bin.."
+  ui_print "[4/7] Installing to /system/bin.."
   chown 0:0 $MODPATH/system/bin/bash;
   chmod 755 $MODPATH/system/bin/bash;
 
-  ui_print "[6/8] Installing to /system/share.."
+  ui_print "[5/7] Installing to /system/share.."
   chown -R 0:0 $MODPATH/system/share;
   find $MODPATH/system/share -type d -exec chmod 755 {} +;
   find $MODPATH/system/share -type f -exec chmod 644 {} +;
@@ -216,12 +200,12 @@ set_permissions() {
   chmod 755 $MODPATH/system/share/bash-completion/completions/*;
 
 
-  ui_print "[7/8] Installing to /system/etc.."
+  ui_print "[6/7] Installing to /system/etc.."
   chown -R 0:0 $MODPATH/system/etc;
   find $MODPATH/system/etc -type d -exec chmod 755 {} +;
   find $MODPATH/system/etc -type f -exec chmod 644 {} +;
   chmod 755 $MODPATH/system/etc/profile.d/bash_completion.sh;
   chmod 755 $MODPATH/system/etc/profile;
 
-  ui_print "[8/8] Installation finished";
+  ui_print "[7/7] Installation finished";
 }

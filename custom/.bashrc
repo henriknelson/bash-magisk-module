@@ -41,4 +41,5 @@ then
   [[ -s "/system/bin/neofetch" ]] &&  neofetch --ascii_distro Lubuntu --off --color_blocks off --underline off --disable title packages icons theme gpu
 fi
 
+source /etc/profile.d/bash_completion.sh
 source /sdcard/.bash_aliases
