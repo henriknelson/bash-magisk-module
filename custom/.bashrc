@@ -1,3 +1,14 @@
+export host=android
+export HOME=/sdcard
+mkdir -p $HOME/tmp
+export TMPDIR=$HOME/tmp
+
+if [[ ${EUID} == 0 ]] ; then
+        export USER="root"
+else
+        export USER="shell"
+fi
+
 if [ -d "/sbin/.magisk/busybox" ]; then
   BBDIR="/sbin/.magisk/busybox"
 elif [ -d "/sbin/.core/busybox" ]; then
