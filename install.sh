@@ -31,7 +31,7 @@ PROPFILE=false
 POSTFSDATA=false
 
 # Set to true if you need late_start service script
-LATESTARTSERVICE=false
+LATESTARTSERVICE=true
 
 ##########################################################################################
 # Replace list
@@ -133,8 +133,7 @@ ui_print "*********************************************"
 
 on_install() {
   ui_print "[1/8] Extracting files..";
-  unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2;
-  unzip -o "$ZIPFILE" 'custom/*' -d $TMPDIR >&2
+  unzip -o "$ZIPFILE" '*' -d $MODPATH >&2;
 
   if [ -d /sdcard ]; then
     SDCARD=/sdcard
@@ -143,44 +142,44 @@ on_install() {
   fi
 
   ui_print "[2/8] Setting $SDCARD location.."
-  sed -i "s|<SDCARD>|$SDCARD|" $TMPDIR/custom/.bashrc
-  sed -i "s|<SDCARD>|$SDCARD|" $TMPDIR/custom/.motd
+  sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.bashrc
+  sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.motd
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/system/etc/mkshrc
 
   if [ ! -f $SDCARD/.bash_aliases ]; then
     ui_print "   Copying .bash_aliases to $SDCARD"
-    cp $TMPDIR/custom/.bash_aliases $SDCARD
+    cp $MODPATH/custom/.bash_aliases $SDCARD
   else
     ui_print "   $SDCARD/.bash_aliases found! Backing up and overwriting!"
     cp -rf $SDCARD/.bash_aliases $SDCARD/.bash_aliases.bak
-    cp -rf $TMPDIR/custom/.bash_aliases $SDCARD
+    cp -rf $MODPATH/custom/.bash_aliases $SDCARD
   fi
 
   if [ ! -f $SDCARD/.inputrc ]; then
     ui_print "   Copying .inputrc to $SDCARD"
-    cp $TMPDIR/custom/.inputrc $SDCARD
+    cp $MODPATH/custom/.inputrc $SDCARD
   else
     ui_print "   $SDCARD/.inputrc found! Backing up and overwriting!"
     cp -rf $SDCARD/.inputrc $SDCARD/.inputrc.bak
-    cp -rf $TMPDIR/custom/.inputrc $SDCARD
+    cp -rf $MODPATH/custom/.inputrc $SDCARD
   fi
 
   if [ ! -f $SDCARD/.bashrc ]; then
     ui_print "   Copying .bashrc to $SDCARD"
-    cp $TMPDIR/custom/.bashrc $SDCARD
+    cp $MODPATH/custom/.bashrc $SDCARD
   else
     ui_print "   $SDCARD/.bashrc found! Backing up and overwriting!"
     cp -rf $SDCARD/.bashrc $SDCARD/.bashrc.bak
-    cp -rf $TMPDIR/custom/.bashrc $SDCARD
+    cp -rf $MODPATH/custom/.bashrc $SDCARD
   fi
 
   if [ ! -f $SDCARD/.motd ]; then
     ui_print "   Copying .motd to $SDCARD"
-    cp $TMPDIR/custom/.motd $SDCARD
+    cp $MODPATH/custom/.motd $SDCARD
   else
     ui_print "   $SDCARD/.motd found! Backing up and overwriting!"
     cp -rf $SDCARD/.motd $SDCARD/.motd.bak
-    cp -rf $TMPDIR/custom/.motd $SDCARD
+    cp -rf $MODPATH/custom/.motd $SDCARD
   fi
   ui_print "[3/8] Installing files..";
 }
@@ -203,7 +202,7 @@ set_permissions() {
 
   ui_print "[4/8] Setting up symlinks.."
   cd $MODPATH/system/share/bash-completion/completions
-  symlink_from_file "$MODDIR/custom/symlinks_completions" "$MODPATH/system/share/bash-completion/completions"
+  symlink_from_file "$MODPATH/custom/symlinks_completions" "$MODPATH/system/share/bash-completion/completions"
 
   ui_print "[5/8] Installing to /system/bin.."
   chown 0:0 $MODPATH/system/bin/bash;
