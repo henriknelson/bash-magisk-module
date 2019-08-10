@@ -10,7 +10,7 @@ This Magisk module installs the latest stable version of bash (+patches) to the 
 * Initial release
 
 ## Source Code
-* Source [GitHub](http://git.savannah.gnu.org/cgit/bash.git)
+* Source [savannah.gnu.org](http://git.savannah.gnu.org/cgit/bash.git)
 
 ## Module Source Code
 * Module [GitHub](https://github.com/henriknelson/bash-magisk-module)
