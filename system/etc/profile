@@ -17,9 +17,11 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+echo "profile as $(whoami)" >> /sdcard/bash_log
+
 # enable bash completion in interactive shells
-if [ -f /system/share/bash-completion/bash_completion ]; then
-  . /system/share/bash-completion/bash_completion
+if [ -f /system/usr/share/bash-completion/bash_completion ]; then
+  . /system/usr/share/bash-completion/bash_completion
 elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
@@ -44,7 +46,7 @@ use_color=false
 
 # set some environment variables
 export HOME=/sdcard
-export TERM=linux
+export TERM=xterm
 
 # enable colorful terminal
 if [[ ${EUID} == 0 ]] ; then

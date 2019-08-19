@@ -7,6 +7,5 @@
 MODDIR=${0%/*};
 
 mount -o rw,remount /system;
-mkdir -p /system/share;
-mount -o ro,remount /system;
-
+mkdir -p /system/var/tmp;
+mount -o rw,remount /system;

@@ -1,38 +1,34 @@
-export host=android
+if [[ ! $- =~ "i" ]]
+then
+	return
+fi
+
 export HOME=/sdcard
 mkdir -p $HOME/tmp
 export TMPDIR=$HOME/tmp
 
 if [[ ${EUID} == 0 ]] ; then
         export USER="root"
+	export HISTFILE=/sdcard/.root_history
 else
-        export USER="shell"
+        export USER="henrik"
+	export HISTFILE=$HOME/.history
 fi
 
-if [ -d "/sbin/.magisk/busybox" ]; then
-  BBDIR="/sbin/.magisk/busybox"
-elif [ -d "/sbin/.core/busybox" ]; then
-  BBDIR="/sbin/.core/busybox"
-fi
+export host=android
+export HOSTNAME="galaxy"
+export TERM=xterm
+export TERMINFO=/system/usr/share/terminfo
 
-export PATH=$BBDIR:/sbin:$PATH
-
-# Enable checkwinsize so that bash will check the terminal size when
-# it regains control.  #65623
-shopt -q -s checkwinsize
-
-# Enable history appending instead of overwriting
+export HISTTIMEFORMAT="$USER %F %T "
+export HISTSIZE=1000000
+export HISTFILESIZE=1000000
+export PROMPT_COMMAND='history -a'
 shopt -s histappend
-
-# Expand the history size
-HISTFILESIZE=100000
-HISTSIZE=10000
-# ... and ignore same sucessive entries.
-HISTCONTROL=ignoreboth
+shopt -s cmdhist
 
 clear
-
-export PS1="\[\033[1m\]\[\033[38;5;4m\]\$USER\[\033[m\]\[\033[38;5;15m\]@\[\033[m\]\[\033[1m\]\$HOSTNAME\[\033[m\][\W]:\[\033[1m\]"
+cd /sdcard
 
 # Print custom logo and system information
 if [[ $- =~ "i" ]]
@@ -41,5 +37,15 @@ then
   [[ -s "/system/bin/neofetch" ]] &&  neofetch --ascii_distro Lubuntu --off --color_blocks off --underline off --disable title packages icons theme gpu
 fi
 
-source /etc/profile.d/bash_completion.sh
-source /sdcard/.bash_aliases
+[[ -s "/etc/profile.d/bash_completion.sh" ]] && source /etc/profile.d/bash_completion.sh
+[[ -s "/sdcard/.aliases" ]] && source /sdcard/.bash_aliases
+
+shopt -q -s checkwinsize
+[[ -s "resize" ]] && resize > /dev/null
+
+BLUE='\033[38;5;4m'
+WHITE='\033[38;5;15m'
+THIN='\033[m'
+BOLD='\033[1m'
+PS1="\[$BOLD\]\[$BLUE\]$USER\[$THIN\]\[$WHITE\]@\[$THIN\]\[$BOLD\]$HOSTNAME\[$THIN\]\[$BOLD\][\W\[$THIN\]]:\[$BOLD\]"
+set -o histexpand -o history

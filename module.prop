@@ -1,6 +1,6 @@
 id=bash-custom
 name=bash for Android
 version=v5.0.7
-versionCode=1
+versionCode=7
 author=nelshh
 description=A statically built version of the latest stable bash (+patches) for android (aarch64)

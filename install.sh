@@ -146,13 +146,13 @@ on_install() {
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.motd
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/system/etc/mkshrc
 
-  if [ ! -f $SDCARD/.bash_aliases ]; then
-    ui_print "   Copying .bash_aliases to $SDCARD"
-    cp $MODPATH/custom/.bash_aliases $SDCARD
+  if [ ! -f $SDCARD/.aliases ]; then
+    ui_print "   Copying .aliases to $SDCARD"
+    cp $MODPATH/custom/.aliases $SDCARD
   else
-    ui_print "   $SDCARD/.bash_aliases found! Backing up and overwriting!"
-    cp -rf $SDCARD/.bash_aliases $SDCARD/.bash_aliases.bak
-    cp -rf $MODPATH/custom/.bash_aliases $SDCARD
+    ui_print "   $SDCARD/.aliases found! Backing up and overwriting!"
+    cp -rf $SDCARD/.aliases $SDCARD/.aliases.bak
+    cp -rf $MODPATH/custom/.aliases $SDCARD
   fi
 
   if [ ! -f $SDCARD/.inputrc ]; then
@@ -189,15 +189,15 @@ set_permissions() {
   set_perm_recursive $MODPATH 0 0 0755 0644;
 
   ui_print "[4/7] Installing to /system/bin.."
-  chown 0:0 $MODPATH/system/bin/bash;
-  chmod 755 $MODPATH/system/bin/bash;
+  chown 0:0 $MODPATH/system/bin/*;
+  chmod 755 $MODPATH/system/bin/*;
 
-  ui_print "[5/7] Installing to /system/share.."
-  chown -R 0:0 $MODPATH/system/share;
-  find $MODPATH/system/share -type d -exec chmod 755 {} +;
-  find $MODPATH/system/share -type f -exec chmod 644 {} +;
-  chmod 755 $MODPATH/system/share/bash-completion/bash_completion;
-  chmod 755 $MODPATH/system/share/bash-completion/completions/*;
+  ui_print "[5/7] Installing to /system/usr/share.."
+  chown -R 0:0 $MODPATH/system/usr/share;
+  find $MODPATH/system/usr/share -type d -exec chmod 755 {} +;
+  find $MODPATH/system/usr/share -type f -exec chmod 644 {} +;
+  chmod 755 $MODPATH/system/usr/share/bash-completion/bash_completion;
+  chmod 755 $MODPATH/system/usr/share/bash-completion/completions/*;
 
 
   ui_print "[6/7] Installing to /system/etc.."

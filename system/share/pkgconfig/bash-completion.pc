@@ -1,9 +1,0 @@
-prefix=/system
-compatdir=/system/etc/bash_completion.d
-completionsdir=/system/share/bash-completion/completions
-helpersdir=/system/share/bash-completion/helpers
-
-Name: bash-completion
-Description: programmable completion for the bash shell
-URL: https://github.com/scop/bash-completion
-Version: 2.9

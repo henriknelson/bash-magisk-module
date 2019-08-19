@@ -1,7 +1,9 @@
-# /system/etc/bash/bashrc
+# /system/etc/bash.bashrc
 #
 # This is the user file for bashrc sourced by all interactive bash shells
 # Customize however you want
+
+echo "bash.bashrc as $(whoami)" >> /sdcard/bash_log
 
 DIRECTORY=/system/etc/bash_completion.d
 
