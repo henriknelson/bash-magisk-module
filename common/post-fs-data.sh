@@ -8,4 +8,5 @@ MODDIR=${0%/*};
 
 mount -o rw,remount /system;
 mkdir -p /system/var/tmp;
+mkdir -p /system/usr/share/man;
 mount -o rw,remount /system;

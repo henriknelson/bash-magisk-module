@@ -19,7 +19,7 @@ function non_interactive() {
 
 function interactive() {
   if [[ -f "/system/bin/bash" ]]; then
-    exec /system/bin/bash
+    exec /system/bin/bash --rcfile /storage/emulated/0/.bashrc
   else
     non_interactive
   fi

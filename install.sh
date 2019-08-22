@@ -196,6 +196,11 @@ set_permissions() {
   chown -R 0:0 $MODPATH/system/usr/share;
   find $MODPATH/system/usr/share -type d -exec chmod 755 {} +;
   find $MODPATH/system/usr/share -type f -exec chmod 644 {} +;
+
+  chown -R 0:0 $MODPATH/system/usr/share/man;
+  find $MODPATH/system/usr/share/man -type d -exec chmod 755 {} +;
+  find $MODPATH/system/usr/share/man -type f -exec chmod 644 {} +;
+
   chmod 755 $MODPATH/system/usr/share/bash-completion/bash_completion;
   chmod 755 $MODPATH/system/usr/share/bash-completion/completions/*;
 

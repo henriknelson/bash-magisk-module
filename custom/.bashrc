@@ -3,6 +3,12 @@ then
 	return
 fi
 
+if [ "$NELSHH_BASH" = $EUID ]
+then
+	return
+fi
+
+export NELSHH_BASH=$EUID
 export HOME=/sdcard
 mkdir -p $HOME/tmp
 export TMPDIR=$HOME/tmp
@@ -10,6 +16,7 @@ export TMPDIR=$HOME/tmp
 if [[ ${EUID} == 0 ]] ; then
         export USER="root"
 	export HISTFILE=/sdcard/.root_history
+	export SHELL=/system/bin/bash
 else
         export USER="henrik"
 	export HISTFILE=$HOME/.history
