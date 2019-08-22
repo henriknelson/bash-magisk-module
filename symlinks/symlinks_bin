@@ -1,1 +1,2 @@
-system/bin/reset;system/bin/tset
+/system/bin
+reset;tset
