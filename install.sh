@@ -124,7 +124,7 @@ REPLACE="
 print_modname() {
 ui_print "*********************************************"
 ui_print "     bash for Android       	    	       "
-ui_print "         - v5.0.9                            "
+ui_print "         - v5.0.11                            "
 ui_print "         - built by nelshh@xda-developers    "
 ui_print "*********************************************"
 }
@@ -194,23 +194,34 @@ set_permissions() {
 
   ui_print "[5/7] Installing to /system/usr/share.."
   chown -R 0:0 $MODPATH/system/usr/share;
-  find $MODPATH/system/usr/share -type d -exec chmod 755 {} +;
-  find $MODPATH/system/usr/share -type f -exec chmod 644 {} +;
+  find $MODPATH/system/usr/share -type d -exec chmod 755 {} \+;
+  find $MODPATH/system/usr/share -type f -exec chmod 644 {} \+;
 
-  chown -R 0:0 $MODPATH/system/usr/share/man;
-  find $MODPATH/system/usr/share/man -type d -exec chmod 755 {} +;
-  find $MODPATH/system/usr/share/man -type f -exec chmod 644 {} +;
+  chown -R 0:0 $MODPATH/system/libexec;
+  find $MODPATH/system/libexec -type d -exec chmod 755 {} \+;
+  find $MODPATH/system/libexec -type f -exec chmod 755 {} \+;
 
-  chmod 755 $MODPATH/system/usr/share/bash-completion/bash_completion;
-  chmod 755 $MODPATH/system/usr/share/bash-completion/completions/*;
+  #chmod 755 $MODPATH/system/usr/share/bash-completion/bash_completion;
+  #chmod 755 $MODPATH/system/usr/share/bash-completion/completions/*;
 
+  mkdir -p /data/man;
+  cp -r $MODPATH/custom/man/* /data/man/;
+  chmod -R 664 /data/man;
+  chown -R 0:0 /data/man;
+  find /data/man -type d -exec chmod 755 {} \+;
+  find /data/man -type f -exec chmod 664 {} \+;
+  if [[ -s "/system/bin/mandoc" ]]; then
+     makewhatis /data/man;
+  fi
 
-  ui_print "[6/7] Installing to /system/etc.."
+  #ui_print "[6/7] Installing to /system/etc.."
   chown -R 0:0 $MODPATH/system/etc;
-  find $MODPATH/system/etc -type d -exec chmod 755 {} +;
-  find $MODPATH/system/etc -type f -exec chmod 644 {} +;
+  find $MODPATH/system/etc -type d -exec chmod 755 {} \+;
+  find $MODPATH/system/etc -type f -exec chmod 644 {} \+;
   chmod 755 $MODPATH/system/etc/profile.d/bash_completion.sh;
   chmod 755 $MODPATH/system/etc/profile;
+  chmod 755 $MODPATH/system/etc/bash.bashrc;
 
   ui_print "[7/7] Installation finished";
 }
+
