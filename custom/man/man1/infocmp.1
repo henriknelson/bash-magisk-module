@@ -1,6 +1,7 @@
 '\" t
 .\"***************************************************************************
-.\" Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+.\" Copyright 2018-2019,2020 Thomas E. Dickey                                *
+.\" Copyright 1998-2017,2018 Free Software Foundation, Inc.                  *
 .\"                                                                          *
 .\" Permission is hereby granted, free of charge, to any person obtaining a  *
 .\" copy of this software and associated documentation files (the            *
@@ -27,7 +28,7 @@
 .\" authorization.                                                           *
 .\"***************************************************************************
 .\"
-.\" $Id: infocmp.1m,v 1.73 2018/07/28 22:08:59 tom Exp $
+.\" $Id: infocmp.1m,v 1.76 2020/02/02 23:34:34 tom Exp $
 .TH infocmp 1 ""
 .ie \n(.g .ds `` \(lq
 .el       .ds `` ``
@@ -553,13 +554,41 @@ Use the \fB\-W\fP option to do this.
 changes the output to \fIwidth\fR characters.
 .TP
 \fB\-x\fR
-print information for user-defined capabilities.
+print information for user-defined capabilities (see \fBuser_caps(\*n)\fP.
 These are extensions to the terminfo repertoire which can be loaded
 using the \fB\-x\fR option of \fBtic\fP.
 .SH FILES
 .TP 20
 \*d
 Compiled terminal description database.
+.SH HISTORY
+Although System V Release 2 provided a terminfo library,
+it had no documented tool for decompiling the terminal descriptions.
+Tony Hansen (AT&T) wrote the first \fBinfocmp\fP in early 1984,
+for System V Release 3.
+.PP
+Eric Raymond used the AT&T documentation in 1995 to provide an equivalent
+\fBinfocmp\fP for ncurses.
+In addition, he added a few new features such as:
+.bP
+the \fB\-e\fP option, to support \fIfallback\fP
+(compiled-in) terminal descriptions
+.bP
+the \fB\-i\fP option, to help with analysis 
+.PP
+Later, Thomas Dickey added the \fB\-x\fP (user-defined capabilities)
+option, and the \fB\-E\fP option to support fallback entries with
+user-defined capabilities.
+.PP
+For a complete list, see the \fIEXTENSIONS\fP section.
+.PP
+In 2010, Roy Marples provided an \fBinfocmp\fP program for NetBSD.
+It is less capable than the SVr4 or ncurses versions
+(e.g., it lacks the sorting options documented in X/Open),
+but does include the \fB\-x\fP option adapted from ncurses.
+.SH PORTABILITY
+X/Open Curses, Issue 7 (2009) provides a description of \fBinfocmp\fP.
+It does not mention the options used for converting to termcap format.
 .SH EXTENSIONS
 The
 \fB\-0\fR,
@@ -602,11 +631,12 @@ The \fB\-F\fR option of \fBinfocmp\fR(1) should be a \fBtoe\fR(1) mode.
 \fBtoe\fR(1),
 \fBncurses\fR(3NCURSES),
 \fBterminfo\fR(\*n).
+\fBuser_caps\fR(\*n).
 .sp
 https://invisible-island.net/ncurses/tctest.html
 .PP
 This describes \fBncurses\fR
-version 6.1 (patch 20190511).
+version 6.2 (patch 20200222).
 .SH AUTHOR
 Eric S. Raymond <esr@snark.thyrsus.com>
 and

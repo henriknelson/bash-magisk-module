@@ -1,4 +1,4 @@
-if [[ ! $- =~ "i" ]]
+if [[ $- != *i* ]]
 then
 	return
 fi
@@ -23,9 +23,11 @@ else
 fi
 
 export host=android
-export HOSTNAME="galaxy"
+export HOSTNAME="oneplus"
 export TERM=xterm
 export TERMINFO=/system/usr/share/terminfo
+export MANPAGER='bat --pager="less" -p --language=man'
+export PATH="$PATH:/system/xbin"
 
 export HISTTIMEFORMAT="$USER %F %T "
 export HISTSIZE=1000000
@@ -38,14 +40,14 @@ clear
 cd /sdcard
 
 # Print custom logo and system information
-if [[ $- =~ "i" ]]
+if [[ $- == *i* ]]
 then
   [[ -s "/sdcard/.motd" ]] && cat /sdcard/.motd
   [[ -s "/system/bin/neofetch" ]] &&  neofetch --ascii_distro Lubuntu --off --color_blocks off --underline off --disable title packages icons theme gpu
 fi
 
+[[ -s "/sdcard/.bash_aliases" ]] && source /sdcard/.bash_aliases
 [[ -s "/etc/profile.d/bash_completion.sh" ]] && source /etc/profile.d/bash_completion.sh
-[[ -s "/sdcard/.aliases" ]] && source /sdcard/.bash_aliases
 
 shopt -q -s checkwinsize
 [[ -s "resize" ]] && resize > /dev/null

@@ -5,6 +5,7 @@ if [ -x "$(command -v dircolors)" ]; then
 fi 
 
 alias tmux='cd /data/data/com.termux/files' 
+alias su='su -s "/system/bin/bash" "$@"'
 alias sudo='su -c "$@"'
 alias sysro='su -c mount -o ro,remount /system'
 alias sysrw='su -c mount -o rw,remount /system' 
