@@ -1,5 +1,3 @@
-if [ -x /system/libexec/magisk/command-not-found ]; then
-	command_not_found_handle() {
-		/system/libexec/magisk/command-not-found "$1"
-	}
-fi
+echo "/system/etc/bash.bashrc as $(whoami)" >> /storage/emulated/0/bash_log
+unset NELSHH_BASH
+source /sdcard/.bashrc

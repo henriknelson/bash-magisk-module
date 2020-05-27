@@ -1,3 +1,5 @@
+echo "/sdcard/.bashrc as $(whoami)" >> /storage/emulated/0/bash_log;
+
 if [[ $- != *i* ]]
 then
 	return
@@ -8,6 +10,10 @@ then
 	return
 fi
 
+#PARENT_COMMAND=$(ps -o args= $PPID)
+#echo $PARENT_COMMAND
+#echo $PARENT_COMMAND >> /sdcard/bash_log
+
 export NELSHH_BASH=$EUID
 export HOME=/sdcard
 mkdir -p $HOME/tmp
@@ -15,18 +21,18 @@ export TMPDIR=$HOME/tmp
 
 if [[ ${EUID} == 0 ]] ; then
         export USER="root"
-	export HISTFILE=/sdcard/.root_history
-	export SHELL=/system/bin/bash
+	export HISTFILE=$HOME/.root_history
 else
         export USER="henrik"
 	export HISTFILE=$HOME/.history
 fi
 
+export SHELL=/system/bin/bash
 export host=android
 export HOSTNAME="oneplus"
 export TERM=xterm
-export TERMINFO=/system/usr/share/terminfo
-export MANPAGER='bat --pager="less" -p --language=man'
+export TERMINFO="/sdcard/.terminfo:/system/usr/share/terminfo"
+export MANPAGER="bat --pager='less_raw' -p --language=man"
 export PATH="$PATH:/system/xbin"
 
 export HISTTIMEFORMAT="$USER %F %T "

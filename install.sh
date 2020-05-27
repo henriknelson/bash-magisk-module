@@ -124,7 +124,7 @@ REPLACE="
 print_modname() {
 ui_print "*********************************************"
 ui_print "     bash for Android       	    	       "
-ui_print "         - v5.0.16                            "
+ui_print "         - v5.0.17                            "
 ui_print "         - built by nelshh@xda-developers    "
 ui_print "*********************************************"
 }
@@ -143,16 +143,26 @@ on_install() {
 
   ui_print "[2/7] Setting $SDCARD location.."
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.bashrc
+  sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.bash_profile
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/custom/.motd
   sed -i "s|<SDCARD>|$SDCARD|" $MODPATH/system/etc/mkshrc
 
-  if [ ! -f $SDCARD/.aliases ]; then
-    ui_print "   Copying .aliases to $SDCARD"
-    cp $MODPATH/custom/.aliases $SDCARD
+  if [ ! -f $SDCARD/.bash_profile ]; then
+    ui_print "   Copying .bash_profile to $SDCARD"
+    cp $MODPATH/custom/.bash_profile $SDCARD
   else
-    ui_print "   $SDCARD/.aliases found! Backing up and overwriting!"
-    cp -rf $SDCARD/.aliases $SDCARD/.aliases.bak
-    cp -rf $MODPATH/custom/.aliases $SDCARD
+    ui_print "   $SDCARD/.bash_profile found! Backing up and overwriting!"
+    cp -rf $SDCARD/.bash_profile $SDCARD/.bash_profile.bak
+    cp -rf $MODPATH/custom/.bash_profile $SDCARD
+  fi
+
+  if [ ! -f $SDCARD/.bash_aliases ]; then
+    ui_print "   Copying .bash_aliases to $SDCARD"
+    cp $MODPATH/custom/.bash_aliases $SDCARD
+  else
+    ui_print "   $SDCARD/.bash_aliases found! Backing up and overwriting!"
+    cp -rf $SDCARD/.bash_aliases $SDCARD/.bash_aliases.bak
+    cp -rf $MODPATH/custom/.bash_aliases $SDCARD
   fi
 
   if [ ! -f $SDCARD/.inputrc ]; then

@@ -6,6 +6,8 @@
 #
 # Support: https://launchpad.net/mksh
 
+echo "/system/etc/mkshrc as $(whoami)" >> /storage/emulated/0/bash_log
+
 function non_interactive() {
   if (( USER_ID )); then PS1='$'; else PS1='#'; fi
   PS4='[$EPOCHREALTIME] '; PS1='${|
@@ -21,12 +23,19 @@ function interactive() {
   if [[ -f "/system/bin/bash" ]]; then
     exec /system/bin/bash --rcfile /storage/emulated/0/.bashrc
   else
-    non_interactive
+    non_interactive;
   fi
 }
 
-if [[ -o login ]]; then
-  non_interactive
-else
-  interactive
-fi
+case "$-" in
+*i*)	echo "interactive" >> /sdcard/mkshrc_log; interactive ;;
+*)	echo "non_interactive" >> /sdcard/mkshrc_log; non_interactive ;;
+esac
+
+#if [[ -o login ]]; then
+#  echo "non_interactive" >> /sdcard/mkshrc_log;
+#  non_interactive;
+#else
+#  echo "interactive" >> /sdcard/mkshrc_log;
+#  interactive;
+#fi
