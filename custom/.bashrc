@@ -53,7 +53,7 @@ then
 fi
 
 [[ -s "/sdcard/.bash_aliases" ]] && source /sdcard/.bash_aliases
-[[ -s "/etc/profile.d/bash_completion.sh" ]] && source /etc/profile.d/bash_completion.sh
+[[ -s "/system/etc/profile.d/bash_completion.sh" ]] && source /system/etc/profile.d/bash_completion.sh
 
 shopt -q -s checkwinsize
 [[ -s "resize" ]] && resize > /dev/null

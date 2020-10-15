@@ -1,6 +1,6 @@
 id=bash-nelshh
 name=bash for Android
 version=v5.0.18
-versionCode=22
+versionCode=23
 author=nelshh
 description=A statically built version of the latest stable bash (+patches) for android (aarch64)

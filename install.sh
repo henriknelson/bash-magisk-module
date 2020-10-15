@@ -28,10 +28,10 @@ SKIPMOUNT=false
 PROPFILE=false
 
 # Set to true if you need post-fs-data script
-POSTFSDATA=true
+POSTFSDATA=false
 
 # Set to true if you need late_start service script
-LATESTARTSERVICE=true
+LATESTARTSERVICE=false
 
 ##########################################################################################
 # Replace list
@@ -211,8 +211,8 @@ set_permissions() {
   find $MODPATH/system/libexec -type d -exec chmod 755 {} \+;
   find $MODPATH/system/libexec -type f -exec chmod 755 {} \+;
 
-  #chmod 755 $MODPATH/system/usr/share/bash-completion/bash_completion;
-  #chmod 755 $MODPATH/system/usr/share/bash-completion/completions/*;
+  chmod 755 $MODPATH/system/usr/share/bash-completion/bash_completion;
+  chmod 755 $MODPATH/system/usr/share/bash-completion/completions/*;
 
   mkdir -p /data/man;
   cp -r $MODPATH/custom/man/* /data/man/;
