@@ -33,7 +33,7 @@ export HOSTNAME="oneplus"
 export TERM=xterm
 export TERMINFO="/sdcard/.terminfo:/system/usr/share/terminfo"
 export MANPAGER="bat --pager='less_raw' -p --language=man"
-export PATH="$PATH:/system/xbin"
+export PATH="$HOME/.local/bin:$PATH:/system/xbin"
 
 export HISTTIMEFORMAT="$USER %F %T "
 export HISTSIZE=1000000
@@ -58,9 +58,17 @@ fi
 shopt -q -s checkwinsize
 [[ -s "resize" ]] && resize > /dev/null
 
-BLUE='\033[38;5;4m'
+BLUE='\033[34m'
 WHITE='\033[38;5;15m'
 THIN='\033[m'
 BOLD='\033[1m'
 PS1="\[$BOLD\]\[$BLUE\]$USER\[$THIN\]\[$WHITE\]@\[$THIN\]\[$BOLD\]$HOSTNAME\[$THIN\]\[$BOLD\][\W\[$THIN\]]:\[$BOLD\]"
+
+export PYTHONSTARTUP=~/.pythonrc
+
+source /sdcard/enhancd/init.sh
+export ENHANCD_FILTER=fzf:fzy:peco
+export FZF_DEFAULT_OPTS="--ansi --no-info --height 20% --reverse --history=\"$HISTFILE\""
+export FZF_DEFAULT_COMMAND="fd -IH -t f"
+[ -f /sdcard/.fzf.bash ] && source /sdcard/.fzf.bash
 set -o histexpand -o history

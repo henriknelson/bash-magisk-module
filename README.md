@@ -6,6 +6,9 @@ This Magisk module installs the latest stable version of bash (+patches) to the 
 
 ## Change Log
 
+### v1.1 - 2021-01-26
+* Updated bash to v 5.1.4
+
 ### v1.0 - 2019-08-07
 * Initial release
 
