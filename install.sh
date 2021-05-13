@@ -124,7 +124,7 @@ REPLACE="
 print_modname() {
 ui_print "*********************************************"
 ui_print "     bash for Android       	    	       "
-ui_print "         - v5.1.4                           "
+ui_print "         - v5.1.8                           "
 ui_print "         - built by nelshh@xda-developers    "
 ui_print "*********************************************"
 }
